@@ -1,40 +1,56 @@
-import Hobby from "../models/hobby";
+import Hobby, { IHobby } from "../models/hobby";
 
-// Get All Hobbies
-export const getAllHobbies = async () => {
+// Create Hobby
+export const createHobby = async (hobbyData: IHobby) => {
   try {
-    const hobbies = await Hobby.find();
-    return hobbies;
+    const hobby = new Hobby(hobbyData);
+    return await hobby.save();
   } catch (error) {
-    throw new Error("Error getting hobbies");
+    throw new Error("Failed to create hobby");
+  }
+};
+
+// Update Hobby
+export const updateHobby = async (id: string, hobbyData: Partial<IHobby>) => {
+  try {
+    return await Hobby.findByIdAndUpdate(id, hobbyData, { new: true });
+  } catch (error) {
+    throw new Error("Failed to update hobby");
+  }
+};
+
+// Delete Hobby
+export const deleteHobby = async (id: string) => {
+  try {
+    return await Hobby.findByIdAndDelete(id);
+  } catch (error) {
+    throw new Error("Failed to delete hobby");
+  }
+};
+
+// Search Hobbies
+export const searchHobbies = async (query: string) => {
+  try {
+    return await Hobby.find({ title: new RegExp(query, "i") }); // 部分一致 & 大文字小文字区別なし
+  } catch (error) {
+    throw new Error("Failed to search hobbies");
   }
 };
 
 // Get Hobby By ID
 export const getHobbyById = async (id: string) => {
   try {
-    const hobby = await Hobby.findById(id);
-    if (!hobby) {
-      throw new Error("Hobby not found");
-    }
-    return hobby;
+    return await Hobby.findById(id);
   } catch (error) {
-    throw new Error("Error getting hobby");
+    throw new Error("Failed to fetch hobby");
   }
 };
 
-// Search Hobbies
-export const searchHobbies = async (title: string) => {
+// Get All Hobbies
+export const getAllHobbies = async () => {
   try {
-    const searchCriteria: any = {};
-    if (title) {
-      searchCriteria.title = { $regex: title, $options: "i" };
-    }
-    const hobbies = await Hobby.find(searchCriteria);
-    return hobbies;
+    return await Hobby.find();
   } catch (error) {
-    throw new Error("Error searching hobbies");
+    throw new Error("Failed to fetch hobbies");
   }
 };
-
-
