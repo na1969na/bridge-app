@@ -18,13 +18,13 @@ export interface IUser extends Document {
 const UserSchema: Schema = new Schema(
   {
     auth0Id: { type: String, required: true, unique: true }, // Auth0のsub
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    phone: { type: String },
+    name: { type: String, required: true, default: "" },
+    email: { type: String, required: true, unique: true, default: "" },
+    phone: { type: String, default: "" },
     emergencyContact: {
-      name: { type: String, required: true },
-      email: { type: String, required: true },
-      phone: { type: String, required: true },
+      name: { type: String, required: true, default: "" },
+      email: { type: String, required: true, default: "" },
+      phone: { type: String, required: true, default: "" },
     },
     lastCheckIn: { type: Date, default: null },
   },

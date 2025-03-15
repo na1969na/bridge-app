@@ -6,13 +6,13 @@ const Header: React.FC = () => {
   return (
     <div className="px-5 py-3">
       <div className="flex justify-between items-center border-b px-10 py-3">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center">
           <Link to="/" className="text-3xl font-bold">BRIDGE</Link>
-          {/* <img
-            className="w-10 h-10"
-            src="/rainbow.svg"
+          <img
+            className="w-18 h-10"
+            src="/icon.svg"
             alt="Bridge Icon"
-          /> */}
+          />
         </div>
         <div className="flex items-center gap-5">
           <AuthButtons />

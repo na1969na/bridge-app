@@ -1,16 +1,16 @@
-import User, { IUser } from "../models/User";
+import User, { IUser } from "../models/user.model";
 
-// Fetch a user by id or create a new user
-export const findOrCreateUser = async (auth0Id: string, name: string, email: string) => {
+// Get or create user
+export const getOrCreateUser = async (auth0Id: string) => {
   try {
     let user = await User.findOne({ auth0Id });
     if (!user) {
-      user = new User({ auth0Id, name, email });
+      user = new User({ auth0Id });
       await user.save();
     }
     return user;
-  }
-  catch (error) {
+  } catch (error) {
+    console.error('Error creating or finding user:', error);
     throw new Error("Failed to find or create user");
   }
 };
@@ -18,7 +18,9 @@ export const findOrCreateUser = async (auth0Id: string, name: string, email: str
 // Update User
 export const updateUser = async (userData: Partial<IUser>) => {
   try {
-    return await User.findByIdAndUpdate(userData.auth0Id, userData, { new: true });
+    return await User.findByIdAndUpdate(userData.auth0Id, userData, {
+      new: true,
+    });
   } catch (error) {
     throw new Error("Failed to update user");
   }

@@ -31,7 +31,7 @@ const CheckIn: React.FC = () => {
             <div className="p-10">
               <button
                 onClick={handleClick}
-                className="text-5xl bg-rose rounded-full px-20 py-10 transition-all duration-300 hover:opacity-80 hover:drop-shadow-[0_0_2em_rgba(244,90,100,0.67)] mt-4 flex items-center gap-3"
+                className="text-5xl bg-rose rounded-full px-20 py-10 transition-all duration-300 hover:drop-shadow-[0_0_2em_rgba(244,90,100,0.67)] mt-4 flex items-center gap-3"
               >
                 CHECK IN
                 <IoMdCheckmarkCircleOutline />

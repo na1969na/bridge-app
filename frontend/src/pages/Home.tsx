@@ -1,15 +1,11 @@
 const Home = () => {
   return (
     <div className="p-10">
-      <div className="flex flex-col gap-5 p-10 bg-amber-600">
-        <h1 className="text-7xl font-semibold bg-white w-3/5">
-          Connecting people
-        </h1>
-        <h1 className="text-7xl font-semibold bg-white w-1/2">
-          across distances
-        </h1>
-        <h1 className="text-7xl font-semibold bg-white">Connecting people</h1>
-        <h1 className="text-7xl font-semibold bg-white">across distances</h1>
+      <div className="flex flex-col gap-5 p-10 bg-orange-600">
+        <h1 className="text-7xl  bg-white w-3/5">Connecting people</h1>
+        <h1 className="text-7xl bg-white w-1/2">across distances,</h1>
+        <h1 className="text-7xl  bg-white w-1/3">Ensuring</h1>
+        <h1 className="text-7xl bg-white w-3/5">Safety and Support</h1>
       </div>
       <div>
         <p>

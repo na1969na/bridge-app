@@ -1,25 +1,34 @@
 import { Request, Response } from "express";
+import { JwtPayload } from "jsonwebtoken";
 import {
-  findOrCreateUser,
+  getOrCreateUser,
   updateUser,
   deleteUser,
 } from "../services/userService";
 
 /**
- * Login
+ * Get or create user
  *
- * @route POST /users/login
+ * @route POST /users
  * @param {Request} req
  * @param {Response} res
  * @returns {void}
  */
-export const loginUserController = async (
+export const getOrCreateUserController = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { auth0Id, name, email } = req.body;
+  const auth = req.auth as unknown as JwtPayload;
+
+  if (!auth || !auth.payload.sub) {
+    res.status(400).json({ error: "トークン情報が無効です。" });
+    return;
+  }
+
+  const { sub } = auth.payload;
+
   try {
-    const user = await findOrCreateUser(auth0Id, name, email);
+    const user = await getOrCreateUser(sub);
     res.status(200).json(user);
   } catch (error) {
     console.error(error);

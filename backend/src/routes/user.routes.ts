@@ -1,13 +1,20 @@
 import { Router } from "express";
+import { auth } from "express-oauth2-jwt-bearer";
 import {
-  loginUserController,
+  getOrCreateUserController,
   updateUserController,
   deleteUserController,
-} from "../controllers/userContoller";
+} from "../controllers/user.controller";
 
 const router = Router();
 
-router.post("/login", loginUserController);
+// JWT middleware
+const checkJwt = auth({
+  audience: process.env.AUTH0_AUDIENCE,
+  issuerBaseURL: `https://${process.env.AUTH0_DOMAIN}/`,
+});
+
+router.post("/", checkJwt, getOrCreateUserController);
 router.put("/update", updateUserController);
 router.delete("/delete", deleteUserController);
 
