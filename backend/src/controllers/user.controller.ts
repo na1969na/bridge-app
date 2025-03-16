@@ -1,85 +1,113 @@
-import { Request, Response } from "express";
-import { JwtPayload } from "jsonwebtoken";
-import {
-  getOrCreateUser,
-  updateUser,
-  deleteUser,
-} from "../services/userService";
+import { Request, Response, NextFunction } from "express";
+import { UserService } from "../services/user.service";
 
-/**
- * Get or create user
- *
- * @route POST /users
- * @param {Request} req
- * @param {Response} res
- * @returns {void}
- */
-export const getOrCreateUserController = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const auth = req.auth as unknown as JwtPayload;
+export class UserController {
+  private userService: UserService;
 
-  if (!auth || !auth.payload.sub) {
-    res.status(400).json({ error: "トークン情報が無効です。" });
-    return;
+  constructor() {
+    this.userService = new UserService();
   }
 
-  const { sub } = auth.payload;
+  // Create or find a user
+  async findOrCreateUser(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    const { sub } = req;
 
-  try {
-    const user = await getOrCreateUser(sub);
-    res.status(200).json(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-};
-
-/**
- * Update user by id
- *
- * @route PUT /users/update
- * @param {Request} req
- * @param {Response} res
- * @returns {void}
- */
-export const updateUserController = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  try {
-    const updatedUser = await updateUser(req.body);
-    if (!updatedUser) {
-      res.status(404).json({ error: "User not found" });
+    if (!sub) {
+      res.status(400).json({ error: "User ID not found" });
       return;
     }
-    res.status(200).json(updatedUser);
-  } catch (error: any) {
-    res.status(500).json({ error: error.message });
-  }
-};
 
-/**
- * Delete user by id
- *
- * @route DELETE /users/delete
- * @param {Request} req
- * @param {Response} res
- * @returns {void}
- */
-export const deleteUserController = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  try {
-    const deletedUser = await deleteUser(req.body.auth0Id);
-    if (!deletedUser) {
-      res.status(404).json({ error: "User not found" });
-      return;
+    try {
+      const user = await this.userService.findOrCreateUser(sub);
+      res.status(200).json(user);
+    } catch (error) {
+      next(error);
     }
-    res.status(200).json({ message: "User deleted successfully" });
-  } catch (error: any) {
-    res.status(500).json({ error: error.message });
   }
-};
+
+  // Get a user
+  async getUser(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const { sub } = req;
+
+      if (!sub) {
+        res.status(400).json({ error: "User ID not found" });
+        return;
+      }
+
+      const user = await this.userService.getUserByAuth0Id(sub);
+
+      if (!user) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+
+      res.status(200).json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // Update a user
+  async updateUser(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const { sub } = req;
+
+      if (!sub) {
+        res.status(400).json({ error: "User ID not found" });
+        return;
+      }
+
+      const updateData = req.body;
+      const updatedUser = await this.userService.updateUser(sub, updateData);
+
+      if (!updatedUser) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // Delete a user
+  async deleteUser(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const { sub } = req;
+
+      if (!sub) {
+        res.status(400).json({ error: "User ID not found" });
+        return;
+      }
+
+      const deletedUser = await this.userService.deleteUser(sub);
+
+      if (!deletedUser) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+
+      res.status(200).json({ message: "User deleted successfully" });
+    } catch (error) {
+      next(error);
+    }
+  }
+}

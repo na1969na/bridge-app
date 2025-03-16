@@ -12,6 +12,7 @@ const PostLoginRedirect = () => {
       if (isAuthenticated && user) {
         try {
           const token = await getAccessTokenSilently();
+          console.log("Token:", token);
           
           const userData = await fetchUserData(token);
 

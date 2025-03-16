@@ -1,4 +1,5 @@
-import mongoos, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
+import { ICheckIn } from "./checkIn.model";
 
 export interface IUser extends Document {
   auth0Id: string;
@@ -6,32 +7,43 @@ export interface IUser extends Document {
   email: string;
   phone: string;
   emergencyContact: {
-    name: String;
-    email: String;
-    phone: String;
+    name: string;
+    phone: string;
+    email?: string;
+  }[];
+  checkIns: ICheckIn[];
+  notificationSettings: {
+    isEnabled: boolean;
+    timeOfDay: "morning" | "afternoon" | "evening";
+    notificationMethod: "SMS" | "email";
   };
-  lastCheckIn: Date | null;
-  createdAt: Date;
-  updatedAt: Date;
+  lastCheckedIn: Date;
 }
 
-const UserSchema: Schema = new Schema(
+const userSchema: Schema<IUser> = new Schema(
   {
-    auth0Id: { type: String, required: true, unique: true }, // Auth0のsub
-    name: { type: String, required: true, default: "" },
-    email: { type: String, required: true, unique: true, default: "" },
-    phone: { type: String, default: "" },
-    emergencyContact: {
-      name: { type: String, required: true, default: "" },
-      email: { type: String, required: true, default: "" },
-      phone: { type: String, required: true, default: "" },
+    auth0Id: { type: String, required: true },
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    phone: { type: String, required: true },
+    emergencyContact: [
+      {
+        name: { type: String, required: true },
+        phone: { type: String, required: true },
+        email: { type: String },
+      },
+    ],
+    checkIns: [{ type: mongoose.Schema.Types.ObjectId, ref: "CheckIn" }],
+    notificationSettings: {
+      isEnabled: { type: Boolean, required: true },
+      timeOfDay: { type: String, enum: ["morning", "afternoon", "evening"] },
+      notificationMethod: { type: String, enum: ["SMS", "email"] },
     },
-    lastCheckIn: { type: Date, default: null },
+    lastCheckedIn: { type: Date },
   },
-  {
-    timestamps: true,
-    versionKey: false,
-  }
+  { timestamps: true, versionKey: false }
 );
 
-export default mongoos.model<IUser>("User", UserSchema);
+const User = mongoose.model<IUser>("User", userSchema);
+
+export default User;
