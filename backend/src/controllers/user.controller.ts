@@ -8,7 +8,7 @@ export class UserController {
     this.userService = new UserService();
   }
 
-  // Create or find a user
+  // Create or find user
   async findOrCreateUser(
     req: Request,
     res: Response,
@@ -29,7 +29,7 @@ export class UserController {
     }
   }
 
-  // Get a user
+  // Get user
   async getUser(
     req: Request,
     res: Response,
@@ -56,7 +56,7 @@ export class UserController {
     }
   }
 
-  // Update a user
+  // Update user
   async updateUser(
     req: Request,
     res: Response,
@@ -84,7 +84,7 @@ export class UserController {
     }
   }
 
-  // Delete a user
+  // Delete user
   async deleteUser(
     req: Request,
     res: Response,

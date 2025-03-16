@@ -15,14 +15,14 @@ export interface IUser extends Document {
   notificationSettings: {
     isEnabled: boolean;
     timeOfDay: "morning" | "afternoon" | "evening";
-    notificationMethod: "SMS" | "email";
+    notificationMethod: "sms" | "email";
   };
   lastCheckedIn: Date;
 }
 
 const userSchema: Schema<IUser> = new Schema(
   {
-    auth0Id: { type: String, required: true },
+    auth0Id: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     phone: { type: String, required: true },
@@ -37,7 +37,7 @@ const userSchema: Schema<IUser> = new Schema(
     notificationSettings: {
       isEnabled: { type: Boolean, required: true },
       timeOfDay: { type: String, enum: ["morning", "afternoon", "evening"] },
-      notificationMethod: { type: String, enum: ["SMS", "email"] },
+      notificationMethod: { type: String, enum: ["sms", "email"] },
     },
     lastCheckedIn: { type: Date },
   },

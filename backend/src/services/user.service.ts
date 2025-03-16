@@ -8,30 +8,32 @@ export class UserService {
     this.userRepository = new UserRepository();
   }
 
-  // Find or create a user based on their Auth0 ID
+  // Find or create user
   async findOrCreateUser(auth0Id: string): Promise<IUser> {
     let user = await this.userRepository.findByAuth0Id(auth0Id);
+    console.log("auth0Id", auth0Id);
+    console.log("user", user);
     if (!user) {
       user = await this.userRepository.create(auth0Id);
     }
     return user;
   }
 
-  // Get a user by their Auth0 ID
+  // Get user
   async getUserByAuth0Id(auth0Id: string): Promise<IUser | null> {
-    return this.userRepository.findByAuth0Id(auth0Id);
+    return await this.userRepository.findByAuth0Id(auth0Id);
   }
 
-  // Update a user
+  // Update user
   async updateUser(
-    id: string,
+    auth0Id: string,
     updateData: Partial<IUser>
   ): Promise<IUser | null> {
-    return this.userRepository.update(id, updateData);
+    return await this.userRepository.update(auth0Id, updateData);
   }
 
-  // Delete a user
-  async deleteUser(id: string): Promise<IUser | null> {
-    return this.userRepository.delete(id);
+  // Delete user
+  async deleteUser(auth0Id: string): Promise<IUser | null> {
+    return await this.userRepository.delete(auth0Id);
   }
 }
