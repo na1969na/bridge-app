@@ -17,7 +17,7 @@ const PostLoginRedirect = () => {
           const userData = await fetchUserData(token);
 
           if (!userData.lastCheckin) {
-            navigate("/register-info");
+            navigate("/user-setting");
           } else {
             navigate("/checkin");
           }
