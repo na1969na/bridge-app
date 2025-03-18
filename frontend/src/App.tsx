@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import User from "./pages/User";
 import CheckIn from "./pages/CheckIn";
+import Dashboard from "./pages/Dashboard";
 import PostLoginRedirect from "./components/auth/PostLoginRedirect";
 import Layout from "./components/Layout";
 
@@ -16,6 +17,7 @@ const App: React.FC = () => {
             <Route path="/" element={<Home />} />
             <Route path="/user" element={<User />} />
             <Route path="/checkin" element={<CheckIn />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </Layout>
       </Router>

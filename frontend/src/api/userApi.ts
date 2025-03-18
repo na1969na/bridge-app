@@ -1,14 +1,9 @@
 import apiClient from "./apiClient";
+import { UserResponse } from "@/types/user";
 
-interface UserData {
-  id: string;
-  name: string;
-  lastCheckin?: string;
-}
-
-export const fetchUserData = async (token: string): Promise<UserData> => {
+export const fetchUserData = async (token: string): Promise<UserResponse> => {
   try {
-    const response = await apiClient.post<UserData>(
+    const response = await apiClient.post<UserResponse>(
       "/users",
       {},
       {
@@ -23,3 +18,8 @@ export const fetchUserData = async (token: string): Promise<UserData> => {
     throw error;
   }
 };
+
+export const updateUserData = async (token: string): Promise<UserData> => {
+
+
+}

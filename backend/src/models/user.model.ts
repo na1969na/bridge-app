@@ -12,10 +12,9 @@ export interface IUser extends Document {
     email?: string;
   }[];
   checkIns: ICheckIn[];
-  notificationSettings: {
-    isEnabled: boolean;
+  reminder: {
+    method: "sms" | "email";
     timeOfDay: "morning" | "afternoon" | "evening";
-    notificationMethod: "sms" | "email";
   };
   lastCheckedIn: Date;
 }
@@ -30,16 +29,23 @@ const userSchema: Schema<IUser> = new Schema(
       {
         name: { type: String, required: true },
         phone: { type: String, required: true },
-        email: { type: String },
+        email: { type: String, required: false },
       },
     ],
     checkIns: [{ type: mongoose.Schema.Types.ObjectId, ref: "CheckIn" }],
-    notificationSettings: {
-      isEnabled: { type: Boolean, required: true },
-      timeOfDay: { type: String, enum: ["morning", "afternoon", "evening"] },
-      notificationMethod: { type: String, enum: ["sms", "email"] },
+    reminder: {
+      method: {
+        type: String,
+        enum: ["sms", "email"],
+        required: false,
+      },
+      timeOfDay: {
+        type: String,
+        enum: ["morning", "afternoon", "evening"],
+        required: false,
+      },
     },
-    lastCheckedIn: { type: Date },
+    lastCheckedIn: { type: Date, required: false },
   },
   { timestamps: true, versionKey: false }
 );
