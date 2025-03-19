@@ -16,7 +16,7 @@ const CheckIn: React.FC = () => {
 
   return (
     <div
-      className="flex items-center justify-center bg-[url(/checkin_bg.svg)] bg-cover bg-center"
+      className="flex items-center justify-center bg-[url(/checkin_bg.svg)] bg-center bg-cover bg-no-repeat h-96 w-full"
       style={{ minHeight: "calc(100vh - 80px)" }}
     >
       <div className="p-10 pt-15 text-center text-6xl font-semibold flex flex-col items-center gap-10">

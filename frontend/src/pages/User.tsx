@@ -7,8 +7,10 @@ import {
   ToggleButton,
 } from "@/components/FormComponents";
 import { userSchema, UserFormInputs } from "../schemas/userSchema";
-import { GrEmergency, GrNotification, GrAdd, GrUser } from "react-icons/gr";
+import { GrEmergency, GrNotification, GrAdd } from "react-icons/gr";
 import { IoRemove } from "react-icons/io5";
+import { FaUser } from "react-icons/fa6";
+
 
 const UserForm: React.FC = () => {
   const {
@@ -43,8 +45,8 @@ const UserForm: React.FC = () => {
 
   return (
     <div className="max-w-3/5 mx-auto p-6">
-      <h1 className="text-3xl font-semibold mb-6 flex gap-3">
-        <GrUser />
+      <h1 className="text-3xl font-semibold mb-6 flex gap-3 items-center">
+        <FaUser />
         Your Profile
       </h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
