@@ -12,7 +12,7 @@
     "typescript-eslint": "^8.27.0"
   },
   "scripts": {
-    "lint": "eslint src",
+    "lint": "eslint .",
     "lint:fix": "eslint src --fix",
     "prepare": "husky install"
   },
