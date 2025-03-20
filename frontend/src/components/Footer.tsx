@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Footer: React.FC = () => {
   return (
@@ -7,16 +7,18 @@ const Footer: React.FC = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
             <div className="flex lg:flex-1 text-3xl">
-              <div className="flex items-center font-semibold">
-                BRIDGE
-              </div>
+              <div className="flex items-center font-semibold">BRIDGE</div>
             </div>
           </div>
           <div>
             &copy; {new Date().getFullYear()} BRIDGE. All rights reserved.
           </div>
           <div>
-            <a href="https://www.linkedin.com/in/nana-okamoto/" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://www.linkedin.com/in/nana-okamoto/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Author
             </a>
           </div>

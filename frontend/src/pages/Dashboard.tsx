@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { HealthStatus } from "@/types/checkIn";
-import Calendar from "@/components/dashboard/Calendar";
-import dayjs from "dayjs";
-import Card from "@/components/dashboard/Card";
-import StatsCard from "@/components/dashboard/StatsCard";
-import { FaCheckCircle, FaExclamationTriangle, FaBell } from "react-icons/fa";
-import { SelectInput } from "@/components/FormComponents";
+import React, { useState } from 'react';
+import { HealthStatus } from '@/types/checkIn';
+import Calendar from '@/components/dashboard/Calendar';
+import dayjs from 'dayjs';
+import Card from '@/components/dashboard/Card';
+import StatsCard from '@/components/dashboard/StatsCard';
+import { FaCheckCircle, FaExclamationTriangle, FaBell } from 'react-icons/fa';
+import { SelectInput } from '@/components/FormComponents';
 
 const Dashboard: React.FC = () => {
   const [mood, setMood] = useState<{ [key: string]: HealthStatus | null }>({});
   const [selectedDate, setSelectedDate] = useState<string>(
-    dayjs().format("YYYY-MM-DD")
+    dayjs().format('YYYY-MM-DD'),
   );
 
   const handleMoodChange = (date: string, status: HealthStatus) => {
@@ -21,9 +21,9 @@ const Dashboard: React.FC = () => {
   };
 
   const stats = [
-    { title: "Feeling Good", count: 1 },
-    { title: "Physical Discomfort", count: 2 },
-    { title: "Mental Struggles", count: 3 },
+    { title: 'Feeling Good', count: 1 },
+    { title: 'Physical Discomfort', count: 2 },
+    { title: 'Mental Struggles', count: 3 },
   ];
 
   return (
@@ -40,15 +40,18 @@ const Dashboard: React.FC = () => {
             {/* Section for changing health status */}
             <div className="p-6">
               <h2 className="text-xl font-semibold mb-2">
-                Mood for {dayjs(selectedDate).format("MMMM D")}
+                Mood for {dayjs(selectedDate).format('MMMM D')}
               </h2>
               <SelectInput
-              options={[
-                { value: "good", label: "Feeling Good" },
-                { value: "physical", label: "Physical Discomfort" },
-                { value: "mental", label: "Mental Struggles" },
-              ]}
-            />
+                options={[
+                  { value: 'good', label: 'Feeling Good' },
+                  { value: 'physical', label: 'Physical Discomfort' },
+                  { value: 'mental', label: 'Mental Struggles' },
+                ]}
+                onSelectChange={(value) =>
+                  handleMoodChange('2025-03-20', value as HealthStatus)
+                }
+              />
             </div>
           </div>
         </div>

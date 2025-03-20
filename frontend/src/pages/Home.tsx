@@ -24,11 +24,11 @@ const Home = () => {
             With a simple tap, confirm your well-being while personalized
             reminders keep you on track. <br />
             If you miss a check-in, BRIDGE immediately notifies your emergency
-            contact, ensuring help when it's needed most. Manage your details
-            effortlessly and view your check-in history with ease. Designed to
-            foster connection and peace of mind, BRIDGE empowers you and your
-            loved ones to stay safe and supported—no matter where life takes
-            you.
+            contact, ensuring help when it&apos;s needed most. Manage your
+            details effortlessly and view your check-in history with ease.
+            Designed to foster connection and peace of mind, BRIDGE empowers you
+            and your loved ones to stay safe and supported—no matter where life
+            takes you.
           </p>
         </div>
       </div>

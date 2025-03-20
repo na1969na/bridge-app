@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface StatItem {
   title: string;
@@ -12,9 +12,7 @@ interface StatsCardProps {
 const StatsCard: React.FC<StatsCardProps> = ({ stats }) => {
   return (
     <div className="p-6 rounded-3xl bg-grape items-center justify-center">
-      <h2 className="text-xl font-semibold">
-        Your Monthly Wellness
-      </h2>
+      <h2 className="text-xl font-semibold">Your Monthly Wellness</h2>
       <div className="flex justify-center space-x-10 p-3">
         {stats.map((stat, index) => (
           <div key={index} className="flex flex-col items-center space-y-2">

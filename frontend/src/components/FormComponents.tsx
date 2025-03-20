@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -25,29 +25,44 @@ interface SelectInputProps
   label?: string;
   error?: string;
   options: { value: string; label: string }[];
+  onSelectChange?: (value: string) => void;
 }
 
 export const SelectInput: React.FC<SelectInputProps> = ({
   label,
   error,
   options,
+  onSelectChange,
   ...props
-}) => (
-  <div className="w-full md:w-1/2">
-    <label className="font-semibold">{label}</label>
-    <select
-      {...props}
-      className="block w-full mt-2 p-3 border rounded-md focus:outline-none"
-    >
-      {options.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </select>
-    {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
-  </div>
-);
+}) => {
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    if (onSelectChange) {
+      onSelectChange(value); // カスタムイベントを発火
+    }
+    if (props.onChange) {
+      props.onChange(event); // 元の `onChange` イベントも実行
+    }
+  };
+
+  return (
+    <div className="w-full md:w-1/2">
+      <label className="font-semibold">{label}</label>
+      <select
+        {...props}
+        onChange={handleChange} // 修正点: カスタムハンドラ
+        className="block w-full mt-2 p-3 border rounded-md focus:outline-none"
+      >
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+    </div>
+  );
+};
 
 interface ToggleButtonProps {
   label: string;

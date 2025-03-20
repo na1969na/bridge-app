@@ -1,11 +1,11 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import User from "./pages/User";
-import CheckIn from "./pages/CheckIn";
-import Dashboard from "./pages/Dashboard";
-import PostLoginRedirect from "./components/auth/PostLoginRedirect";
-import Layout from "./components/Layout";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import User from './pages/User';
+import CheckIn from './pages/CheckIn';
+import Dashboard from './pages/Dashboard';
+import PostLoginRedirect from './components/auth/PostLoginRedirect';
+import Layout from './components/Layout';
 
 const App: React.FC = () => {
   return (

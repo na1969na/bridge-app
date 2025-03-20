@@ -1,7 +1,7 @@
-import { useEffect } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
-import { useNavigate } from "react-router-dom";
-import { fetchUserData } from "../../api/userApi";
+import { useEffect } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
+import { useNavigate } from 'react-router-dom';
+import { fetchUserData } from '../../api/userApi';
 
 const PostLoginRedirect = () => {
   const { getAccessTokenSilently, user, isAuthenticated } = useAuth0();
@@ -12,17 +12,17 @@ const PostLoginRedirect = () => {
       if (isAuthenticated && user) {
         try {
           const token = await getAccessTokenSilently();
-          console.log("Token:", token);
-          
+          console.log('Token:', token);
+
           const userData = await fetchUserData(token);
 
           if (!userData.lastCheckin) {
-            navigate("/user-setting");
+            navigate('/user-setting');
           } else {
-            navigate("/checkin");
+            navigate('/checkin');
           }
         } catch (error) {
-          console.error("Error fetching user data:", error);
+          console.error('Error fetching user data:', error);
           throw error;
         }
       }

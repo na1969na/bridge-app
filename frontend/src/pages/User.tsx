@@ -1,16 +1,15 @@
-import React from "react";
-import { useForm, useFieldArray, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import React from 'react';
+import { useForm, useFieldArray, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   FormInput,
   SelectInput,
   ToggleButton,
-} from "@/components/FormComponents";
-import { userSchema, UserFormInputs } from "../schemas/userSchema";
-import { GrEmergency, GrNotification, GrAdd } from "react-icons/gr";
-import { IoRemove } from "react-icons/io5";
-import { FaUser } from "react-icons/fa6";
-
+} from '@/components/FormComponents';
+import { userSchema, UserFormInputs } from '../schemas/userSchema';
+import { GrEmergency, GrNotification, GrAdd } from 'react-icons/gr';
+import { IoRemove } from 'react-icons/io5';
+import { FaUser } from 'react-icons/fa6';
 
 const UserForm: React.FC = () => {
   const {
@@ -23,24 +22,24 @@ const UserForm: React.FC = () => {
   } = useForm<UserFormInputs>({
     resolver: zodResolver(userSchema),
     defaultValues: {
-      emergencyContact: [{ firstname: "", lastname: "", phone: "", email: "" }],
+      emergencyContact: [{ firstname: '', lastname: '', phone: '', email: '' }],
       reminder: { method: null },
     },
   });
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "emergencyContact",
+    name: 'emergencyContact',
   });
 
-  const handleToggle = (method: "sms" | "email") => {
-    const currentMethod = getValues("reminder.method");
-    setValue("reminder.method", currentMethod === method ? null : method);
+  const handleToggle = (method: 'sms' | 'email') => {
+    const currentMethod = getValues('reminder.method');
+    setValue('reminder.method', currentMethod === method ? null : method);
   };
 
   const onSubmit = (data: UserFormInputs) => {
     console.log(data);
-    alert("Form submitted!");
+    alert('Form submitted!');
   };
 
   return (
@@ -54,25 +53,25 @@ const UserForm: React.FC = () => {
         <div className="flex gap-4">
           <FormInput
             label="First name"
-            {...register("firstname")}
+            {...register('firstname')}
             error={errors.firstname?.message}
           />
           <FormInput
             label="Last name"
-            {...register("lastname")}
+            {...register('lastname')}
             error={errors.lastname?.message}
           />
         </div>
         <div className="flex gap-4">
           <FormInput
             label="Phone number"
-            {...register("phone")}
+            {...register('phone')}
             error={errors.phone?.message}
           />
           <FormInput
             label="Email"
             type="email"
-            {...register("email")}
+            {...register('email')}
             error={errors.email?.message}
           />
         </div>
@@ -123,7 +122,7 @@ const UserForm: React.FC = () => {
           <button
             type="button"
             onClick={() =>
-              append({ firstname: "", lastname: "", phone: "", email: "" })
+              append({ firstname: '', lastname: '', phone: '', email: '' })
             }
             className="mt-2 px-4 py-2 bg-black text-white rounded-md hover:opacity-80 flex items-center gap-2"
           >
@@ -145,13 +144,13 @@ const UserForm: React.FC = () => {
               <div className="flex flex-col gap-4">
                 <ToggleButton
                   label="SMS"
-                  isChecked={field.value === "sms"}
-                  onChange={() => handleToggle("sms")}
+                  isChecked={field.value === 'sms'}
+                  onChange={() => handleToggle('sms')}
                 />
                 <ToggleButton
                   label="Email"
-                  isChecked={field.value === "email"}
-                  onChange={() => handleToggle("email")}
+                  isChecked={field.value === 'email'}
+                  onChange={() => handleToggle('email')}
                 />
               </div>
             )}
@@ -160,11 +159,11 @@ const UserForm: React.FC = () => {
             <SelectInput
               label="Time"
               options={[
-                { value: "morning", label: "Morning" },
-                { value: "afternoon", label: "Afternoon" },
-                { value: "evening", label: "Evening" },
+                { value: 'morning', label: 'Morning' },
+                { value: 'afternoon', label: 'Afternoon' },
+                { value: 'evening', label: 'Evening' },
               ]}
-              {...register("reminder.timeOfDay")}
+              {...register('reminder.timeOfDay')}
             />
           </div>
         </div>

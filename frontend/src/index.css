@@ -1,18 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-  --font-primary: "Sora", sans-serif;
+  --font-primary: 'Sora', sans-serif;
   --breakpoint-3xl: 1920px;
-  --color-grape: #CACE91;
-  --color-bubble: #EDCDD1;
-  --color-light-lavender: #E0E1F6;
-  --color-rose: #F4A4AB;
-  --color-olive-green:  #A3B473;
-  --color-lavender: #B7B9E2;
-  --color-resene: #F3EFE3;
-  --color-bistre: #3D281C;
-  --color-light-lichen: #BBC8D3;
+  --color-grape: #cace91;
+  --color-bubble: #edcdd1;
+  --color-light-lavender: #e0e1f6;
+  --color-rose: #f4a4ab;
+  --color-olive-green: #a3b473;
+  --color-lavender: #b7b9e2;
+  --color-resene: #f3efe3;
+  --color-bistre: #3d281c;
+  --color-light-lichen: #bbc8d3;
   --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
   --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
 }

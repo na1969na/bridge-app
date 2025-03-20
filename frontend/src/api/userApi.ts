@@ -1,25 +1,20 @@
-import apiClient from "./apiClient";
-import { UserResponse } from "@/types/user";
+import apiClient from './apiClient';
+import { UserResponse } from '@/types/user';
 
 export const fetchUserData = async (token: string): Promise<UserResponse> => {
   try {
     const response = await apiClient.post<UserResponse>(
-      "/users",
+      '/users',
       {},
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     return response.data;
   } catch (error) {
-    console.error("Error fetching user data:", error);
+    console.error('Error fetching user data:', error);
     throw error;
   }
 };
-
-export const updateUserData = async (token: string): Promise<UserData> => {
-
-
-}

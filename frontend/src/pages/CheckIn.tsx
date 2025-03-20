@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import { HealthStatus } from "@/types/checkIn";
+import React, { useState } from 'react';
+import { HealthStatus } from '@/types/checkIn';
 
 const CheckIn: React.FC = () => {
   const [selectedMood, setSelectedMood] = useState<HealthStatus | null>(null);
-  const [message, setMessage] = useState<string>("");
+  const [message, setMessage] = useState<string>('');
 
   const handleMoodSelect = (mood: HealthStatus) => {
     setSelectedMood(mood);
   };
-  
+
   const handleClick = () => {
-    console.log("Selected Mood:", selectedMood);
-    setMessage("Thank you for checking in!");
+    console.log('Selected Mood:', selectedMood);
+    setMessage('Thank you for checking in!');
   };
 
   return (
     <div
       className="flex items-center justify-center bg-[url(/checkin_bg.svg)] bg-center bg-cover bg-no-repeat h-96 w-full"
-      style={{ minHeight: "calc(100vh - 80px)" }}
+      style={{ minHeight: 'calc(100vh - 80px)' }}
     >
       <div className="p-10 pt-15 text-center text-6xl font-semibold flex flex-col items-center gap-10">
         {message ? (
@@ -41,8 +41,8 @@ const CheckIn: React.FC = () => {
                 onClick={() => handleMoodSelect(HealthStatus.GOOD)}
                 className={`px-20 py-10 rounded-full font-semibold ${
                   selectedMood === HealthStatus.GOOD
-                    ? "bg-rose text-white"
-                    : "bg-gray-300 text-black"
+                    ? 'bg-rose text-white'
+                    : 'bg-gray-300 text-black'
                 }`}
               >
                 Feeling Good
@@ -51,8 +51,8 @@ const CheckIn: React.FC = () => {
                 onClick={() => handleMoodSelect(HealthStatus.PHYSICAL)}
                 className={`px-6 py-3 rounded-full font-semibold ${
                   selectedMood === HealthStatus.PHYSICAL
-                    ? "bg-olive-green text-white"
-                    : "bg-gray-300 text-black"
+                    ? 'bg-olive-green text-white'
+                    : 'bg-gray-300 text-black'
                 }`}
               >
                 Physical Discomfort
@@ -61,8 +61,8 @@ const CheckIn: React.FC = () => {
                 onClick={() => handleMoodSelect(HealthStatus.MENTAL)}
                 className={`px-6 py-3 rounded-full font-semibold ${
                   selectedMood === HealthStatus.MENTAL
-                    ? "bg-lavender text-white"
-                    : "bg-gray-300 text-black"
+                    ? 'bg-lavender text-white'
+                    : 'bg-gray-300 text-black'
                 }`}
               >
                 Mental Struggles
