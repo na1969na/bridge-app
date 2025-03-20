@@ -8,7 +8,11 @@ interface CalendarProps {
   onDateClick: (date: string) => void;
 }
 
-const Calendar: React.FC<CalendarProps> = ({ currentDate, mood, onDateClick }) => {
+const Calendar: React.FC<CalendarProps> = ({
+  currentDate,
+  mood,
+  onDateClick,
+}) => {
   const getMonthName = (date: Date) => {
     return dayjs(date).format("MMMM");
   };
@@ -36,27 +40,20 @@ const Calendar: React.FC<CalendarProps> = ({ currentDate, mood, onDateClick }) =
       case HealthStatus.MENTAL:
         return "text-white bg-lavender hover:opacity-80";
       default:
-        return "hover:bg-stone-100";
+        return "hover:bg-zinc-800";
     }
   };
 
   const calendarDays = generateCalendar();
 
   return (
-    <div className="bg-green-50 border rounded-3xl w-full p-6">
-      <h2 className="text-xl mb-8 text-center font-semibold">
-        {getMonthName(currentDate)}
+    <div className="bg-zinc-900 text-white rounded-3xl w-full max-w-md mx-auto aspect-square p-6">
+      <h2 className="text-xl mb-8 font-semibold flex justify-between items-end">
+        <span >Your Wellness Days</span>
+        <span className="text-sm text-stone-500">{getMonthName(currentDate)}</span>
       </h2>
       <div className="grid grid-cols-7 gap-2 text-center">
-        {[
-          "S",
-          "M",
-          "T",
-          "W",
-          "T",
-          "F",
-          "S",
-        ].map((day) => (
+        {["S", "M", "T", "W", "T", "F", "S"].map((day) => (
           <div key={day} className="text-stone-500">
             {day}
           </div>
@@ -69,7 +66,7 @@ const Calendar: React.FC<CalendarProps> = ({ currentDate, mood, onDateClick }) =
             onClick={() => onDateClick(date)}
           >
             <div
-              className={`w-10 h-10 rounded-full flex items-center justify-center text-black font-medium ${getMoodClass(
+              className={`w-full aspect-square text-lg rounded-full flex items-center justify-center ${getMoodClass(
                 mood[date]
               )}`}
             >

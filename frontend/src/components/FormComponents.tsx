@@ -22,7 +22,7 @@ export const FormInput: React.FC<FormInputProps> = ({
 
 interface SelectInputProps
   extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  label: string;
+  label?: string;
   error?: string;
   options: { value: string; label: string }[];
 }
