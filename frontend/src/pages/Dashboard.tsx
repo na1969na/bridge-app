@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import Card from '@/components/dashboard/Card';
 import StatsCard from '@/components/dashboard/StatsCard';
 import { FaCheckCircle, FaExclamationTriangle, FaBell } from 'react-icons/fa';
-import { SelectInput } from '@/components/FormComponents';
+import { SelectInput } from '@/components/form/FormComponents';
 
 const Dashboard: React.FC = () => {
   const [mood, setMood] = useState<{ [key: string]: HealthStatus | null }>({});

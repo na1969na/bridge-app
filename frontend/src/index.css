@@ -13,6 +13,7 @@
   --color-resene: #f3efe3;
   --color-bistre: #3d281c;
   --color-light-lichen: #bbc8d3;
+  --xl-custom: 20px;
   --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
   --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
 }

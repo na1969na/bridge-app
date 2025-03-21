@@ -1,17 +1,28 @@
 import React from 'react';
-import { useForm, useFieldArray, Controller } from 'react-hook-form';
+import {
+  useForm,
+  useFieldArray,
+  Controller,
+  SubmitHandler,
+} from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   FormInput,
   SelectInput,
   ToggleButton,
-} from '@/components/FormComponents';
-import { userSchema, UserFormInputs } from '../schemas/userSchema';
+} from '@/components/form/FormComponents';
+import { userSchema, UserFormInputs } from '../schemas/userSchemas';
 import { GrEmergency, GrNotification, GrAdd } from 'react-icons/gr';
 import { IoRemove } from 'react-icons/io5';
-import { FaUser } from 'react-icons/fa6';
+import { useUpdateUser } from '@/hooks/users';
+import { User } from '@/types';
+import useToastStore from '@/stores/useToastStore';
+import useUserStore from '@/stores/useUserStore';
+import { useDeleteUser } from '@/hooks/users';
 
-const UserForm: React.FC = () => {
+const UserSettings: React.FC = () => {
+  const user = useUserStore((state) => state.user);
+
   const {
     register,
     handleSubmit,
@@ -22,8 +33,14 @@ const UserForm: React.FC = () => {
   } = useForm<UserFormInputs>({
     resolver: zodResolver(userSchema),
     defaultValues: {
-      emergencyContact: [{ firstname: '', lastname: '', phone: '', email: '' }],
-      reminder: { method: null },
+      firstname: user?.firstname || '',
+      lastname: user?.lastname || '',
+      email: user?.email || '',
+      phone: user?.phone || '',
+      emergencyContact: user?.emergencyContact || [
+        { firstname: '', lastname: '', phone: '', email: '' },
+      ],
+      reminder: user?.reminder || { method: null, timeOfDay: 'morning' },
     },
   });
 
@@ -37,16 +54,60 @@ const UserForm: React.FC = () => {
     setValue('reminder.method', currentMethod === method ? null : method);
   };
 
-  const onSubmit = (data: UserFormInputs) => {
-    console.log(data);
-    alert('Form submitted!');
+  const updateUser = useUpdateUser();
+  const { showToast } = useToastStore();
+  const deleteUser = useDeleteUser();
+
+  const onSubmit: SubmitHandler<UserFormInputs> = (data) => {
+    const userData: Partial<User> = {
+      firstname: data.firstname,
+      lastname: data.lastname,
+      email: data.email,
+      phone: data.phone,
+      reminder: {
+        method: data.reminder.method || null,
+        timeOfDay: data.reminder.timeOfDay,
+      },
+      emergencyContact: data.emergencyContact.map((contact) => ({
+        firstname: contact.firstname,
+        lastname: contact.lastname,
+        phone: contact.phone,
+        email: contact.email || null,
+      })),
+    };
+    console.log(userData);
+
+    updateUser.mutate(
+      { userData },
+      {
+        onSuccess: () => {
+          showToast('Operation successful!', 'success');
+        },
+        onError: (error) => {
+          console.error('Failed to update user:', error);
+          showToast('Something went wrong!', 'error');
+        },
+      },
+    );
+  };
+
+  const handleDeleteUser = async () => {
+    if (window.confirm('Are you sure you want to delete your account?')) {
+      try {
+        await deleteUser.mutateAsync();
+        showToast('Account successfully deleted', 'success');
+        window.location.href = '/';
+      } catch (error) {
+        console.error('Failed to delete user:', error);
+        showToast('There was an error deleting your account.', 'error');
+      }
+    }
   };
 
   return (
     <div className="max-w-3/5 mx-auto p-6">
       <h1 className="text-3xl font-semibold mb-6 flex gap-3 items-center">
-        <FaUser />
-        Your Profile
+        User Settings
       </h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Basic Info */}
@@ -78,7 +139,7 @@ const UserForm: React.FC = () => {
 
         {/* Emergency Contact */}
         <div className="space-y-4">
-          <h2 className="flex items-center gap-2 text-lg font-semibold">
+          <h2 className="flex items-center gap-2 text-2xl font-semibold">
             <GrEmergency />
             Emergency Contact
           </h2>
@@ -133,7 +194,7 @@ const UserForm: React.FC = () => {
 
         {/* Notification */}
         <div className="space-y-4">
-          <h2 className="flex items-center gap-2 text-lg font-semibold">
+          <h2 className="flex items-center gap-2 text-2xl font-semibold">
             <GrNotification />
             Reminders Setting
           </h2>
@@ -175,8 +236,16 @@ const UserForm: React.FC = () => {
           Save
         </button>
       </form>
+
+      {/* Delete Button */}
+      <button
+        onClick={handleDeleteUser}
+        className="mt-6 w-full py-3 bg-red-600 text-white font-semibold rounded-md hover:opacity-80"
+      >
+        Delete Account
+      </button>
     </div>
   );
 };
 
-export default UserForm;
+export default UserSettings;

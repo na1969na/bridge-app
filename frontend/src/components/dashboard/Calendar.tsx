@@ -1,6 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { HealthStatus } from '@/types/checkIn';
+import { HealthStatus } from '@/types';
 
 interface CalendarProps {
   currentDate: Date;

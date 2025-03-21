@@ -1,35 +1,41 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useNavigate } from 'react-router-dom';
-import { fetchUserData } from '../../api/userApi';
+import { useUser } from '@/hooks/users';
+import useUserStore from '@/stores/useUserStore';
 
-const PostLoginRedirect = () => {
+const PostLoginRedirect: React.FC = () => {
   const { getAccessTokenSilently, user, isAuthenticated } = useAuth0();
   const navigate = useNavigate();
+  const { data: userData, isLoading, isError } = useUser();
+  const setToken = useUserStore((state) => state.setToken);
 
   useEffect(() => {
-    const handleUserRedirection = async () => {
-      if (isAuthenticated && user) {
-        try {
-          const token = await getAccessTokenSilently();
-          console.log('Token:', token);
-
-          const userData = await fetchUserData(token);
-
-          if (!userData.lastCheckin) {
-            navigate('/user-setting');
-          } else {
-            navigate('/checkin');
-          }
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-          throw error;
-        }
+    const fetchToken = async () => {
+      try {
+        const token = await getAccessTokenSilently();
+        setToken(token);
+      } catch (error) {
+        console.error('Failed to get token:', error);
       }
     };
 
-    handleUserRedirection();
-  }, [getAccessTokenSilently, isAuthenticated, user, navigate]);
+    if (isAuthenticated && user) {
+      fetchToken();
+    }
+  }, [isAuthenticated, user, getAccessTokenSilently, setToken]);
+
+  useEffect(() => {
+    if (isLoading || isError) return;
+
+    if (userData) {
+      if (!userData.lastCheckedIn) {
+        navigate('/settings');
+      } else {
+        navigate('/checkin');
+      }
+    }
+  }, [userData, isLoading, isError, navigate]);
 
   return null;
 };

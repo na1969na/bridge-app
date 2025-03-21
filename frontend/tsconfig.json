@@ -9,6 +9,6 @@
     "paths": {
       "@/*": ["src/*"]
     }
-  }
-  // "include": ["src", "vitest-setup.ts"],
+  },
+  // "include": ["src", "vitest-setup.ts"]
 }

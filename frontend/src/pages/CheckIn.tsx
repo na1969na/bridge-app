@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HealthStatus } from '@/types/checkIn';
+import { HealthStatus } from '@/types';
 
 const CheckIn: React.FC = () => {
   const [selectedMood, setSelectedMood] = useState<HealthStatus | null>(null);
