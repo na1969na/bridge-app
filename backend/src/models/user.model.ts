@@ -1,5 +1,4 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { ICheckIn } from "./checkIn.model";
 
 export interface IUser extends Document {
   auth0Id: string;
@@ -13,7 +12,6 @@ export interface IUser extends Document {
     phone: string;
     email?: string;
   }[];
-  checkIns: ICheckIn[];
   reminder: {
     method: "sms" | "email";
     timeOfDay: "morning" | "afternoon" | "evening";
@@ -36,7 +34,6 @@ const userSchema: Schema<IUser> = new Schema(
         email: { type: String, required: false },
       },
     ],
-    checkIns: [{ type: mongoose.Schema.Types.ObjectId, ref: "CheckIn" }],
     reminder: {
       method: {
         type: String,

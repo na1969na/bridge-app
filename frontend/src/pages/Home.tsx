@@ -1,9 +1,22 @@
-import React from 'react'
+import React from 'react';
+import { useUser } from '../hooks/users';
 
 const Home: React.FC = () => {
-  return (
-    <div>Home</div>
-  )
-}
+  const { isLoading, isError } = useUser();
 
-export default Home
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error fetching user data</div>;
+  }
+
+  return (
+    <div>
+      <h1>Welcome back</h1>
+    </div>
+  );
+};
+
+export default Home;
