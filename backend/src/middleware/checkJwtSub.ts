@@ -1,7 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import { JwtPayload } from "jsonwebtoken";
 
-export const checkJwtSub = (req: Request, res: Response, next: NextFunction): void => {
+export const checkJwtSub = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
   const auth = req.auth as unknown as JwtPayload;
 
   if (!auth || !auth.payload.sub) {

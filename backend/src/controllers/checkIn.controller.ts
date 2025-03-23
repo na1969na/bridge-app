@@ -23,12 +23,15 @@ export class CheckInController {
         return;
       }
 
-      const checkIn = await this.checkInService.createCheckIn(
-        userId,
-        new Date(date),
-        healthStatus
-      );
-      res.status(201).json(checkIn);
+      const updateData = req.body;
+      const updateCheckIn = await this.checkInService.createCheckIn(updateData);
+
+      if (!updateCheckIn) {
+        res.status(404).json({ error: "Check-in not found" });
+        return;
+      }
+
+      res.status(201).json(updateCheckIn);
     } catch (error) {
       next(error);
     }
@@ -49,6 +52,12 @@ export class CheckInController {
       }
 
       const checkIns = await this.checkInService.getCheckInsByUserId(userId);
+
+      if (!checkIns) {
+        res.status(404).json({ error: "Check-ins not found" });
+        return;
+      }
+
       res.status(200).json(checkIns);
     } catch (error) {
       next(error);
@@ -74,6 +83,12 @@ export class CheckInController {
         new Date(startDate),
         new Date(endDate)
       );
+
+      if (!checkIns) {
+        res.status(404).json({ error: "Check-ins not found" });
+        return;
+      }
+
       res.status(200).json(checkIns);
     } catch (error) {
       next(error);
@@ -81,7 +96,11 @@ export class CheckInController {
   }
 
   // Update check-in
-  async updateCheckIn(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async updateCheckIn(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
     try {
       const { id } = req.params;
       const { healthStatus } = req.body;
@@ -91,7 +110,10 @@ export class CheckInController {
         return;
       }
 
-      const updatedCheckIn = await this.checkInService.updateCheckIn(id, healthStatus as HealthStatus);
+      const updatedCheckIn = await this.checkInService.updateCheckIn(
+        id,
+        healthStatus as HealthStatus
+      );
 
       if (!updatedCheckIn) {
         res.status(404).json({ error: "Check-in not found" });
@@ -105,16 +127,15 @@ export class CheckInController {
   }
 
   // Delete check-in
-  async deleteCheckIn(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async deleteCheckIn(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
     try {
       const { id } = req.params;
 
-      const deletedCheckIn = await this.checkInService.deleteCheckIn(id);
-
-      if (!deletedCheckIn) {
-        res.status(404).json({ error: "Check-in not found" });
-        return;
-      }
+      await this.checkInService.deleteCheckIn(id);
 
       res.status(200).json({ message: "Check-in deleted successfully" });
     } catch (error) {

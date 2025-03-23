@@ -2,8 +2,13 @@ import CheckIn, { ICheckIn } from "../models/checkIn.model";
 
 export class CheckInRepository {
   // Create check-in
-  async create(userId: string, date: Date, healthStatus: string): Promise<ICheckIn> {
-    return await CheckIn.create({ userId, date, healthStatus });
+  async create(data: Partial<ICheckIn>): Promise<ICheckIn> {
+    return await CheckIn.create({
+      userId: data.userId,
+      healthStatus: data.healthStatus,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
   }
 
   // Get all check-ins for a user
@@ -24,12 +29,19 @@ export class CheckInRepository {
   }
 
   // Update check-in
-  async updateCheckIn(id: string, healthStatus: string): Promise<ICheckIn | null> {
-    return CheckIn.findByIdAndUpdate(id, { healthStatus }, { new: true }).exec();
+  async updateCheckIn(
+    id: string,
+    healthStatus: string
+  ): Promise<ICheckIn | null> {
+    return CheckIn.findByIdAndUpdate(
+      id,
+      { healthStatus },
+      { new: true }
+    ).exec();
   }
 
   // Delete check-in
-  async deleteCheckIn(userId: string): Promise<ICheckIn | null> {
-    return CheckIn.findByIdAndDelete(userId).exec();
+  async deleteCheckIn(userId: string): Promise<void> {
+    await CheckIn.deleteMany({ userId }).exec();
   }
 }

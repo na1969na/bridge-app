@@ -3,11 +3,13 @@ import { ICheckIn } from "./checkIn.model";
 
 export interface IUser extends Document {
   auth0Id: string;
-  name: string;
+  firstname: string;
+  lastname: string;
   email: string;
   phone: string;
   emergencyContact: {
-    name: string;
+    firstname: string;
+    lastname: string;
     phone: string;
     email?: string;
   }[];
@@ -22,12 +24,14 @@ export interface IUser extends Document {
 const userSchema: Schema<IUser> = new Schema(
   {
     auth0Id: { type: String, required: true, unique: true },
-    name: { type: String, required: true },
+    firstname: { type: String, required: true },
+    lastname: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     phone: { type: String, required: true },
     emergencyContact: [
       {
-        name: { type: String, required: true },
+        firstname: { type: String, required: true },
+        lastname: { type: String, required: true },
         phone: { type: String, required: true },
         email: { type: String, required: false },
       },

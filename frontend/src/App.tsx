@@ -1,35 +1,54 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import UserSettings from './pages/UserSettings';
-import CheckIn from './pages/CheckIn';
-import Dashboard from './pages/Dashboard';
-import PostLoginRedirect from './components/auth/PostLoginRedirect';
-import Layout from './components/Layout';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import Toast from './components/common/Toast';
+import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Auth0Provider, withAuthenticationRequired } from "@auth0/auth0-react";
+import Home from "./pages/Home";
 
-const queryClient = new QueryClient();
+const AppRoutes = () => {
+  const { VITE_AUTH0_ISSUER_BASE_URL, VITE_AUTH0_CLIENT_ID, VITE_DOMAIN } =
+    import.meta.env;
 
-const App: React.FC = () => {
+  const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+    return (
+      <Auth0Provider
+        domain={VITE_AUTH0_ISSUER_BASE_URL}
+        clientId={VITE_AUTH0_CLIENT_ID}
+        authorizationParams={{
+          redirect_uri: window.location.origin,
+          audience: VITE_DOMAIN,
+        }}
+      >
+        {children}
+      </Auth0Provider>
+    );
+  };
+
+  /**
+   * Router Component
+   * @returns  Router
+   */
+  const Router = () => {
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
+    );
+  };
+
+  const AuthRouting = withAuthenticationRequired(Router, {
+    onRedirecting: () => (
+      <>
+        <p>Now Loading...</p>
+      </>
+    ),
+  });
+
   return (
-    <>
-      <QueryClientProvider client={queryClient}>
-        <Router>
-          <Layout>
-            <PostLoginRedirect />
-            <Toast />
-            <Routes>
-              <Route path="*" element={<Home />} />
-              <Route path="/settings" element={<UserSettings />} />
-              <Route path="/checkin" element={<CheckIn />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-            </Routes>
-          </Layout>
-        </Router>
-      </QueryClientProvider>
-    </>
+    <AuthProvider>
+      <AuthRouting />
+    </AuthProvider>
   );
 };
 
-export default App;
+export default AppRoutes;

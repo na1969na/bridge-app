@@ -20,7 +20,7 @@ connectDB();
 
 // Routes
 app.use("/users", userRoutes);
-app.use("/check-ins", checkInRoutes);
+app.use("/checkins", checkInRoutes);
 
 // Error handling
 app.use(errorHandler);

@@ -11,11 +11,9 @@ export class CheckInService {
 
   // Create check-in
   async createCheckIn(
-    userId: string,
-    date: Date,
-    healthStatus: HealthStatus
+    data: Partial<ICheckIn>
   ): Promise<ICheckIn> {
-    return await this.checkInRepository.create(userId, date, healthStatus);
+    return await this.checkInRepository.create(data);
   }
 
   // Get all check-ins
@@ -47,7 +45,7 @@ export class CheckInService {
   }
 
   // Delete check-ins
-  async deleteCheckIn(userId: string): Promise<ICheckIn | null> {
-    return await this.checkInRepository.deleteCheckIn(userId);
+  async deleteCheckIn(userId: string): Promise<void> {
+    await this.checkInRepository.deleteCheckIn(userId);
   }
 }

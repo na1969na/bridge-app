@@ -9,16 +9,19 @@ export class UserRepository {
   // Create user
   async create(auth0Id: string): Promise<IUser> {
     const user = new User({ auth0Id });
-    return user.save();
+    return user.save({ validateBeforeSave: false });
   }
 
   // Update user
-  async update(auth0Id: string, updateData: Partial<IUser>): Promise<IUser | null> {
-    return User.findByIdAndUpdate(auth0Id, updateData, { new: true }).exec();
+  async update(
+    auth0Id: string,
+    updateData: Partial<IUser>
+  ): Promise<IUser | null> {
+    return User.findOneAndUpdate({ auth0Id }, updateData, { new: true }).exec();
   }
 
   // Delete user
   async delete(auth0Id: string): Promise<IUser | null> {
-    return User.findByIdAndDelete(auth0Id).exec();
+    return User.findOneAndDelete({ auth0Id }).exec();
   }
 }

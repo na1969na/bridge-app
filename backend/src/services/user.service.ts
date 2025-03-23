@@ -11,17 +11,10 @@ export class UserService {
   // Find or create user
   async findOrCreateUser(auth0Id: string): Promise<IUser> {
     let user = await this.userRepository.findByAuth0Id(auth0Id);
-    console.log("auth0Id", auth0Id);
-    console.log("user", user);
     if (!user) {
       user = await this.userRepository.create(auth0Id);
     }
     return user;
-  }
-
-  // Get user
-  async getUserByAuth0Id(auth0Id: string): Promise<IUser | null> {
-    return await this.userRepository.findByAuth0Id(auth0Id);
   }
 
   // Update user

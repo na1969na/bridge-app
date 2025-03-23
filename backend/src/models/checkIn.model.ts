@@ -8,8 +8,9 @@ export enum HealthStatus {
 
 export interface ICheckIn extends Document {
   userId: mongoose.Schema.Types.ObjectId;
-  date: Date;
   healthStatus: HealthStatus;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const checkInSchema: Schema<ICheckIn> = new Schema(
@@ -19,12 +20,13 @@ const checkInSchema: Schema<ICheckIn> = new Schema(
       ref: "User", // Reference to _id in User model
       required: true,
     },
-    date: { type: Date, required: true },
     healthStatus: {
       type: String,
       required: true,
       enum: Object.values(HealthStatus),
     },
+    createdAt: { type: Date, required: true },
+    updatedAt: { type: Date, required: true },
   },
   { timestamps: true, versionKey: false }
 );
@@ -34,7 +36,7 @@ checkInSchema.post("save", async function (doc) {
     const user = await mongoose.model("User").findOne(doc.userId);
     if (user) {
       user.checkIns.push(doc._id);
-      user.lastCheckedIn = doc.date;
+      user.lastCheckedIn = doc.updatedAt || Date.now();
       await user.save();
     }
   } catch (error) {
@@ -42,7 +44,7 @@ checkInSchema.post("save", async function (doc) {
   }
 });
 
-checkInSchema.index({ userId: 1, date: 1 });
+checkInSchema.index({ userId: 1, updatedAt: 1 });
 
 const CheckIn = mongoose.model<ICheckIn>("CheckIn", checkInSchema);
 
