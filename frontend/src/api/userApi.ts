@@ -2,11 +2,14 @@ import { User } from '../types';
 import apiClient from './apiClient';
 
 // Get (Create) user by auth0Id
-export const fetchUser = async (token: string): Promise<User> => {
+export const fetchUser = async (
+  token: string,
+  email: string,
+): Promise<User> => {
   try {
     const response = await apiClient.post<User>(
       '/users',
-      {},
+      { email: email },
       {
         headers: {
           Authorization: `Bearer ${token}`,

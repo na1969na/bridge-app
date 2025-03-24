@@ -7,7 +7,7 @@ import useCheckInStore from '../stores/useCheckInStore';
 
 // Get token
 export const useAuthToken = () => {
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
 
   const getToken = async () => {
     if (!isAuthenticated) {
@@ -16,14 +16,14 @@ export const useAuthToken = () => {
     return await getAccessTokenSilently();
   };
 
-  return { getToken, isAuthenticated };
+  return { getToken, isAuthenticated, user };
 };
 
 // Get (Create) user
 export const useUser = () => {
   const { setUser } = useUserStore();
   const { setCheckIns } = useCheckInStore();
-  const { getToken, isAuthenticated } = useAuthToken();
+  const { getToken, isAuthenticated, user } = useAuthToken();
 
   return useQuery({
     queryKey: ['user'],
@@ -32,7 +32,12 @@ export const useUser = () => {
         throw new Error('User is not authenticated');
       }
       const token = await getToken();
-      const userData = await fetchUser(token);
+      console.log('token', token);
+      console.log('user', user?.email);
+      if (!user?.email) {
+        throw new Error('User email not found');
+      }
+      const userData = await fetchUser(token, user?.email);
       setUser(userData);
       setCheckIns(userData.checkIns);
       return userData;

@@ -27,7 +27,7 @@ const userSchema: Schema<IUser> = new Schema(
     auth0Id: { type: String, required: true, unique: true },
     firstname: { type: String, required: true },
     lastname: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
+    email: { type: String, required: true, default: "" },
     phone: { type: String, required: true },
     emergencyContact: [
       {

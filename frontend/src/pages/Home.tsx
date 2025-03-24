@@ -24,7 +24,7 @@ const Home: React.FC = () => {
         <CheckInInfo />
       </div>
       <div className="flex flex-col lg:flex-row gap-5 mt-5">
-        <Calendar currentDate={new Date()} />
+        <Calendar />
         <StatsCard />
         <img src="checkin_img.svg" alt="" className="hidden lg:block w-1/3 lg:animate-slide-up"/>
       </div>

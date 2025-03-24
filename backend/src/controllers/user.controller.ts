@@ -15,6 +15,7 @@ export class UserController {
     next: NextFunction
   ): Promise<void> {
     const { sub } = req;
+    const { email } = req.body;
 
     if (!sub) {
       res.status(400).json({ error: "User ID not found" });
@@ -22,7 +23,7 @@ export class UserController {
     }
 
     try {
-      const user = await this.userService.findOrCreateUser(sub);
+      const user = await this.userService.findOrCreateUser(sub, email);
       if (!user) {
         res.status(404).json({ error: "User not found" });
         return;

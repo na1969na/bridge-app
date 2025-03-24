@@ -3,16 +3,15 @@ import dayjs from 'dayjs';
 import { HealthStatus } from '../../types';
 import useCheckInStore from '../../stores/useCheckInStore';
 
-interface CalendarProps {
-  currentDate: Date;
-}
-
-const Calendar: React.FC<CalendarProps> = ({ currentDate }) => {
+const Calendar: React.FC = () => {
   const { checkIns } = useCheckInStore();
   console.log(checkIns);
+
   const getMonthName = (date: Date) => {
     return dayjs(date).format('MMMM');
   };
+  
+  const currentDate = new Date();
 
   const generateCalendar = () => {
     const startOfMonth = dayjs(currentDate).startOf('month');
@@ -64,7 +63,7 @@ const Calendar: React.FC<CalendarProps> = ({ currentDate }) => {
         ))}
 
         {calendarDays.map((date) => (
-          <div key={date} className="flex flex-col items-center cursor-pointer">
+          <div key={`calendar-${date}`} className="flex flex-col items-center cursor-pointer">
             <div
               className={`w-full aspect-square text-lg rounded-full flex items-center justify-center ${getMoodClass(
                 mood[date],

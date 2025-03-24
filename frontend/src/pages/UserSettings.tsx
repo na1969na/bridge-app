@@ -141,7 +141,7 @@ const UserSettings: React.FC = () => {
             Emergency Contact
           </h2>
           {fields.map((field, index) => (
-            <div key={field.id} className="border p-4 rounded space-y-4">
+            <div key={`${field.id}-${index}`} className="border p-4 rounded space-y-4">
               <div className="flex flex-col md:flex-row gap-4">
                 <FormInput
                   label="First name"

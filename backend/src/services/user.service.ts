@@ -13,11 +13,11 @@ export class UserService {
   }
 
   // Find or create user
-  async findOrCreateUser(auth0Id: string): Promise<IUser> {
+  async findOrCreateUser(auth0Id: string, email: string): Promise<IUser> {
     let user = await this.userRepository.findByAuth0Id(auth0Id);
 
     if (!user) {
-      user = await this.userRepository.create(auth0Id);
+      user = await this.userRepository.create(auth0Id, email);
     }
 
     const today = new Date();

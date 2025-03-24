@@ -8,8 +8,9 @@ export class UserRepository {
   }
 
   // Create user
-  async create(auth0Id: string): Promise<IUser> {
-    const user = new User({ auth0Id });
+  async create(auth0Id: string, email: string): Promise<IUser> {
+    const user = new User({ auth0Id, email });
+    console.log("user", user);
     return user.save({ validateBeforeSave: false });
   }
 

@@ -47,7 +47,7 @@ const StatsCard: React.FC = () => {
       <div className="flex flex-col gap-5">
         {stats.map((stat, index) => (
           <div
-            key={index}
+            key={`${stat.title}-${index}`}
             className={cn(
               'flex items-center justify-between rounded-full',
               stat.divBgColor,

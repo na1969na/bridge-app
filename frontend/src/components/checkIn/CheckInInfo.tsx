@@ -97,7 +97,7 @@ const CheckInInfo: React.FC = () => {
     <div className="flex flex-col gap-5 w-full lg:w-1/3 lg:animate-slide-up">
       {checkInInfo.map((info, index) => (
         <Card
-          key={index}
+          key={`${info.title}-${index}`}
           title={info.title}
           value={info.value}
           icon={info.icon}

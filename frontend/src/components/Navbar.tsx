@@ -7,7 +7,7 @@ import { AiFillHome } from 'react-icons/ai';
 import useUserStore from '../stores/useUserStore';
 
 const Navbar: React.FC = () => {
-  const { user, logout } = useAuth0();
+  const { logout } = useAuth0();
   const { setUser } = useUserStore();
 
   const handleLogout = () => {
@@ -24,11 +24,11 @@ const Navbar: React.FC = () => {
         <img className="w-18 h-10" src="/icon.svg" alt="Bridge Icon" />
       </div>
       <div className="flex gap-5">
-      <div className='block md:hidden text-3xl p-2 rounded-full bg-lavender hover:opacity-80'>
-        <Link to="/">
-          <AiFillHome />
-        </Link>
-      </div>
+        <div className="block md:hidden text-3xl p-2 rounded-full bg-lavender hover:opacity-80">
+          <Link to="/">
+            <AiFillHome />
+          </Link>
+        </div>
         <Button className="text-3xl p-2 rounded-full bg-rose text-black hover:opacity-80">
           <Link to="/settings">
             <IoSettingsOutline />
@@ -40,11 +40,6 @@ const Navbar: React.FC = () => {
         >
           <IoLogOutOutline />
         </Button>
-        <img
-          className="rounded-full w-11 h-11"
-          src={user?.picture}
-          alt={user?.name}
-        />
       </div>
     </div>
   );
