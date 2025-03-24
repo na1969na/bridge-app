@@ -14,9 +14,10 @@ import useToastStore from '../stores/useToastStore';
 import { useModalStore } from '../stores/useModalStore';
 import { User } from '../types';
 import { FormInput, SelectInput, ToggleButton } from '../components/form/FormComponents';
-import Modal from '../components/common/Modal';
+
 import { useUpdateUser, useDeleteUser } from '../hooks/users';
 import { useAuth0 } from '@auth0/auth0-react';
+import Modal from '../components/Modal';
 
 const UserSettings: React.FC = () => {
   const { user, setUser } = useUserStore();

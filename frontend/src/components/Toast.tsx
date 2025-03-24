@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import useToastStore from '../../stores/useToastStore';
-import { cn } from '../../libs/utils';
+import useToastStore from '../stores/useToastStore';
+import { cn } from '../libs/utils';
 
 const Toast: React.FC = () => {
   const { message, type, hideToast } = useToastStore();

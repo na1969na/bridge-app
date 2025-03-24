@@ -1,6 +1,8 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Types } from "mongoose";
+import { ICheckIn } from "./checkIn.model";
 
 export interface IUser extends Document {
+  _id: Types.ObjectId;
   auth0Id: string;
   firstname: string;
   lastname: string;
@@ -17,6 +19,7 @@ export interface IUser extends Document {
     timeOfDay: "morning" | "afternoon" | "evening";
   };
   lastCheckedIn: Date;
+  checkIns: ICheckIn[];
 }
 
 const userSchema: Schema<IUser> = new Schema(

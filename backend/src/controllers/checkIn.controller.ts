@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { CheckInService } from "../services/checkIn.service";
 import { HealthStatus } from "../models/checkIn.model";
+import mongoose from "mongoose";
 
 export class CheckInController {
   private checkInService: CheckInService;
@@ -16,49 +17,22 @@ export class CheckInController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const { userId, date, healthStatus } = req.body;
+      const { userId, healthStatus } = req.body;
 
-      if (!userId || !date || !healthStatus) {
+      if (!userId || !healthStatus) {
         res.status(400).json({ error: "Missing required fields" });
         return;
       }
 
-      const updateData = req.body;
-      const updateCheckIn = await this.checkInService.createCheckIn(updateData);
+      const data = req.body;
+      const newData = await this.checkInService.createCheckIn(data);
 
-      if (!updateCheckIn) {
+      if (!newData) {
         res.status(404).json({ error: "Check-in not found" });
         return;
       }
 
-      res.status(201).json(updateCheckIn);
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  // Get all check-ins
-  async getCheckInsByUserId(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> {
-    try {
-      const { userId } = req.params;
-
-      if (!userId) {
-        res.status(400).json({ error: "User ID is required" });
-        return;
-      }
-
-      const checkIns = await this.checkInService.getCheckInsByUserId(userId);
-
-      if (!checkIns) {
-        res.status(404).json({ error: "Check-ins not found" });
-        return;
-      }
-
-      res.status(200).json(checkIns);
+      res.status(201).json(newData);
     } catch (error) {
       next(error);
     }
@@ -71,10 +45,14 @@ export class CheckInController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const { userId, startDate, endDate } = req.body;
+      const { userId, startDate, endDate } = req.query;
 
-      if (!userId || !startDate || !endDate) {
-        res.status(400).json({ error: "Missing required fields" });
+      if (
+        typeof userId !== "string" ||
+        typeof startDate !== "string" ||
+        typeof endDate !== "string"
+      ) {
+        res.status(400).json({ error: "Invalid parameters" });
         return;
       }
 
@@ -105,15 +83,12 @@ export class CheckInController {
       const { id } = req.params;
       const { healthStatus } = req.body;
 
-      if (!healthStatus) {
+      if (!id || !healthStatus) {
         res.status(400).json({ error: "Health status is required" });
         return;
       }
 
-      const updatedCheckIn = await this.checkInService.updateCheckIn(
-        id,
-        healthStatus as HealthStatus
-      );
+      const updatedCheckIn = await this.checkInService.updateCheckIn(id, healthStatus);
 
       if (!updatedCheckIn) {
         res.status(404).json({ error: "Check-in not found" });
@@ -121,23 +96,6 @@ export class CheckInController {
       }
 
       res.status(200).json(updatedCheckIn);
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  // Delete check-in
-  async deleteCheckIn(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> {
-    try {
-      const { id } = req.params;
-
-      await this.checkInService.deleteCheckIn(id);
-
-      res.status(200).json({ message: "Check-in deleted successfully" });
     } catch (error) {
       next(error);
     }

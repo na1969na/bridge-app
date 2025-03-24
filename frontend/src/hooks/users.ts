@@ -3,6 +3,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { deleteUser, fetchUser, updateUser } from '../api/userApi';
 import useUserStore from '../stores/useUserStore';
 import { User } from '../types';
+import useCheckInStore from '../stores/useCheckInStore';
 
 // Get token
 export const useAuthToken = () => {
@@ -21,6 +22,7 @@ export const useAuthToken = () => {
 // Get (Create) user
 export const useUser = () => {
   const { setUser } = useUserStore();
+  const { setCheckIns } = useCheckInStore();
   const { getToken, isAuthenticated } = useAuthToken();
 
   return useQuery({
@@ -32,6 +34,7 @@ export const useUser = () => {
       const token = await getToken();
       const userData = await fetchUser(token);
       setUser(userData);
+      setCheckIns(userData.checkIns);
       return userData;
     },
     enabled: isAuthenticated,
@@ -53,9 +56,9 @@ export const useUpdateUser = () => {
       return await updateUser(token, userData);
     },
     onSuccess: (updatedUser) => {
-      queryClient.invalidateQueries({ queryKey: ['user', updatedUser.id] });
+      queryClient.invalidateQueries({ queryKey: ['user', updatedUser._id] });
 
-      if (user && user.id === updatedUser.id) {
+      if (user && user._id === updatedUser._id) {
         queryClient.invalidateQueries({ queryKey: ['user'] });
         setUser(updatedUser);
       }

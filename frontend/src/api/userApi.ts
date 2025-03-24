@@ -5,7 +5,7 @@ import apiClient from './apiClient';
 export const fetchUser = async (token: string): Promise<User> => {
   try {
     const response = await apiClient.post<User>(
-      '/',
+      '/users',
       {},
       {
         headers: {
@@ -26,7 +26,7 @@ export const updateUser = async (
   user: Partial<User>,
 ): Promise<User> => {
   try {
-    const response = await apiClient.put<User>(`/`, user, {
+    const response = await apiClient.put<User>(`/users`, user, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -41,7 +41,7 @@ export const updateUser = async (
 // Delete user
 export const deleteUser = async (token: string): Promise<void> => {
   try {
-    await apiClient.delete(`/`, {
+    await apiClient.delete(`/users`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

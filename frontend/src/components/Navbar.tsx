@@ -1,14 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from './Button';
+import { Button } from './common/Button';
 import { useAuth0 } from '@auth0/auth0-react';
 import { IoSettingsOutline, IoLogOutOutline } from 'react-icons/io5';
+import useUserStore from '../stores/useUserStore';
 
 const Navbar: React.FC = () => {
   const { user, logout } = useAuth0();
+  const { setUser } = useUserStore();
 
   const handleLogout = () => {
     logout({ logoutParams: { returnTo: window.location.origin } });
+    setUser(null);
   };
 
   return (

@@ -35,8 +35,19 @@ checkInSchema.post("save", async function (doc) {
   try {
     const user = await mongoose.model("User").findOne(doc.userId);
     if (user) {
-      user.checkIns.push(doc._id);
-      user.lastCheckedIn = doc.updatedAt || Date.now();
+      user.lastCheckedIn = doc.updatedAt;
+      await user.save();
+    }
+  } catch (error) {
+    console.error("Error updating user with check-in:", error);
+  }
+});
+
+checkInSchema.post("findOneAndUpdate", async function (doc) {
+  try {
+    const user = await mongoose.model("User").findOne(doc.userId);
+    if (user) {
+      user.lastCheckedIn = doc.updatedAt;
       await user.save();
     }
   } catch (error) {

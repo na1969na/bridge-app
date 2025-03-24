@@ -18,11 +18,11 @@ const About: React.FC = () => {
       </div>
       <div className="pr-20">
         <div className="bg-bubble rounded-r-[5rem] p-10 text-2xl">
-          <h1 className="mb-8">
+          <h1 className="mb-8 animate-fade-in-scale">
             <span className="font-bold text-5xl">BRIDGE</span> is...
           </h1>
           <div className="flex font-semibold">
-            <div className="flex-1 flex text-center bg-bubble p-10 rounded-2xl flex-col justify-center items-center gap-10">
+            <div className="flex-1 flex text-center bg-bubble p-10 rounded-2xl flex-col justify-center items-center gap-10 animate-fade-in-scale">
               <img
                 className="w-80 h-80"
                 src="/img_1.svg"
@@ -30,7 +30,7 @@ const About: React.FC = () => {
               />
               <p>Connect with Loved Ones, Anytime, Anywhere</p>
             </div>
-            <div className="flex-1 text-center p-10 flex flex-col justify-center items-center gap-10">
+            <div className="flex-1 text-center p-10 flex flex-col justify-center items-center gap-10 animate-fade-in-scale">
               <img
                 className="w-80 h-80"
                 src="/img_2.svg"
@@ -41,7 +41,7 @@ const About: React.FC = () => {
                 <br /> Regular Check-Ins
               </p>
             </div>
-            <div className="flex-1 text-center p-10 flex flex-col justify-center items-center gap-10">
+            <div className="flex-1 text-center p-10 flex flex-col justify-center items-center gap-10 animate-fade-in-scale">
               <img
                 className="w-80 h-80"
                 src="/img_3.svg"

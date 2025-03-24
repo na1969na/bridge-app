@@ -1,20 +1,30 @@
 import React from 'react';
 import { useUser } from '../hooks/users';
+import StatsCard from '../components/checkIn/StatsCard';
+import Calendar from '../components/checkIn/Calendar';
+import CheckInInput from '../components/checkIn/CheckInInput';
+import CheckInInfo from '../components/checkIn/CheckInInfo';
+import LoadingHomePage from '../components/LoadingHomePage';
 
 const Home: React.FC = () => {
-  const { isLoading, isError } = useUser();
+  const { isLoading, isError }= useUser();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingHomePage />;
   }
 
   if (isError) {
-    return <div>Error fetching user data</div>;
+    return <div>Loading check-in data...</div>;
   }
 
   return (
-    <div>
-      <h1>Welcome back</h1>
+    <div className="px-10 py-5">
+      <CheckInInput />
+      <div className="flex gap-5 mt-5">
+        <Calendar currentDate={new Date()} />
+        <StatsCard />
+        <CheckInInfo />
+      </div>
     </div>
   );
 };

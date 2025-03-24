@@ -1,6 +1,7 @@
 import React from 'react';
-import { useModalStore } from '../../stores/useModalStore';
-import { cn } from '../../libs/utils';
+import { useModalStore } from '../stores/useModalStore';
+import { cn } from '../libs/utils';
+
 
 interface ModalProps {
   title: string;

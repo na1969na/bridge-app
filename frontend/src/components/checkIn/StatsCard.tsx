@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { cn } from '../../libs/utils';
+import useCheckInStore from '../../stores/useCheckInStore';
+import { CheckIn, HealthStatus } from '../../types';
 
 interface StatItem {
   title: string;
@@ -8,11 +10,37 @@ interface StatItem {
   pBgColor: string;
 }
 
-interface StatsCardProps {
-  stats: StatItem[];
-}
+const StatsCard: React.FC = () => {
+  const { checkIns } = useCheckInStore();
+  const [stats, setStats] = useState<StatItem[]>([]);
 
-const StatsCard: React.FC<StatsCardProps> = ({ stats }) => {
+  useEffect(() => {
+    if (checkIns && checkIns.length > 0) {
+      const newStats: StatItem[] = [
+        {
+          title: 'Feeling Good',
+          count: checkIns.filter((checkIn: CheckIn) => checkIn.healthStatus === HealthStatus.GOOD).length,
+          divBgColor: 'bg-bubble',
+          pBgColor: 'bg-rose',
+        },
+        {
+          title: 'Physical Discomfort',
+          count: checkIns.filter((checkIn: CheckIn) => checkIn.healthStatus === HealthStatus.PHYSICAL).length,
+          divBgColor: 'bg-grape',
+          pBgColor: 'bg-olive-green',
+        },
+        {
+          title: 'Mental Struggles',
+          count: checkIns.filter((checkIn: CheckIn) => checkIn.healthStatus === HealthStatus.MENTAL).length,
+          divBgColor: 'bg-light-lavender',
+          pBgColor: 'bg-lavender',
+        },
+      ];
+
+      setStats(newStats);
+    }
+  }, [checkIns]);
+
   return (
     <div className="p-6 rounded-3xl bg-white items-center justify-center">
       <h2 className="text-xl font-semibold mb-5">Your Monthly Wellness</h2>

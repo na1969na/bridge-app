@@ -1,6 +1,6 @@
 // User
 export interface User {
-  id: string;
+  _id: string;
   firstname: string;
   lastname: string;
   phone: string;
@@ -16,6 +16,7 @@ export interface User {
     timeOfDay?: 'morning' | 'afternoon' | 'evening';
   };
   lastCheckedIn: string;
+  checkIns: CheckIn[];
 }
 
 // Health Status
@@ -31,7 +32,7 @@ export interface MoodInput {
 
 // Check-in
 export interface CheckIn {
-  id: string;
+  _id: string;
   userId: string;
   healthStatus: HealthStatus;
   createdAt: Date;

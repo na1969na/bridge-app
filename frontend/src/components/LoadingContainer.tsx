@@ -1,5 +1,5 @@
 import React from 'react';
-import { Skeleton } from './Skelton';
+import { Skeleton } from './common/Skelton';
 
 const LoadingContainer: React.FC = () => {
   return (

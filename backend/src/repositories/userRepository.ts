@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import User, { IUser } from "../models/user.model";
 
 export class UserRepository {
@@ -21,7 +22,10 @@ export class UserRepository {
   }
 
   // Delete user
-  async delete(auth0Id: string): Promise<IUser | null> {
-    return User.findOneAndDelete({ auth0Id }).exec();
+  async delete(
+    auth0Id: string,
+    options?: { session?: mongoose.ClientSession }
+  ): Promise<IUser | null> {
+    return User.findOneAndDelete({ auth0Id }, options).exec();
   }
 }

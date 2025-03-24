@@ -6,15 +6,17 @@ interface CustomError extends Error {
 }
 
 export const errorHandler = (err: CustomError, req: Request, res: Response) => {
-  const statusCode = err.statusCode || 500;
-  const message = err.message || 'Internal Server Error';
-
   console.error(err);
+  if (!res || !res.status) {
+    res = {
+      status: (code: number) => ({
+        json: (body: any) => console.error('Custom Error Response:', body),
+      }),
+    } as Response;
+  }
 
-  res.status(statusCode).json({
-    error: {
-      message,
-      statusCode,
-    },
+  res.status(500).json({
+    message: 'Internal Server Error',
+    error: err.message || 'Unknown Error',
   });
 };
