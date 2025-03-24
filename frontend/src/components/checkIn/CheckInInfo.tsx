@@ -94,7 +94,7 @@ const CheckInInfo: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col gap-5 w-1/3 animate-slide-up">
+    <div className="flex flex-col gap-5 w-full lg:w-1/3 lg:animate-slide-up">
       {checkInInfo.map((info, index) => (
         <Card
           key={index}

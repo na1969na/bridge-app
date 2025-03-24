@@ -14,7 +14,6 @@ import useToastStore from '../stores/useToastStore';
 import { useModalStore } from '../stores/useModalStore';
 import { User } from '../types';
 import { FormInput, SelectInput, ToggleButton } from '../components/form/FormComponents';
-
 import { useUpdateUser, useDeleteUser } from '../hooks/users';
 import { useAuth0 } from '@auth0/auth0-react';
 import Modal from '../components/Modal';
@@ -103,13 +102,13 @@ const UserSettings: React.FC = () => {
   };
 
   return (
-    <div className="max-w-3/5 mx-auto p-6">
+    <div className="w-full md:max-w-3/5 mx-auto p-6">
       <h1 className="text-3xl font-semibold mb-6 flex gap-3 items-center">
         User Settings
       </h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Basic Info */}
-        <div className="flex gap-4">
+        <div className="flex flex-col md:flex-row gap-4">
           <FormInput
             label="First name"
             {...register('firstname')}
@@ -121,7 +120,7 @@ const UserSettings: React.FC = () => {
             error={errors.lastname?.message}
           />
         </div>
-        <div className="flex gap-4">
+        <div className="flex flex-col md:flex-row gap-4">
           <FormInput
             label="Phone number"
             {...register('phone')}
@@ -143,7 +142,7 @@ const UserSettings: React.FC = () => {
           </h2>
           {fields.map((field, index) => (
             <div key={field.id} className="border p-4 rounded space-y-4">
-              <div className="flex gap-4">
+              <div className="flex flex-col md:flex-row gap-4">
                 <FormInput
                   label="First name"
                   {...register(`emergencyContact.${index}.firstname` as const)}
@@ -155,7 +154,7 @@ const UserSettings: React.FC = () => {
                   error={errors.emergencyContact?.[index]?.lastname?.message}
                 />
               </div>
-              <div className="flex gap-4">
+              <div className="flex flex-col md:flex-row gap-4">
                 <FormInput
                   label="Phone number"
                   {...register(`emergencyContact.${index}.phone` as const)}

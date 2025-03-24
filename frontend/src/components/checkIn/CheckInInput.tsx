@@ -22,7 +22,7 @@ const StateButton: React.FC<StateButtonProps> = ({
   return (
     <button
       onClick={onClick}
-      className={`w-60 h-60 rounded-full px-6 py-3 font-semibold transition-colors duration-200 ${
+      className={`w-full md:w-50 md:h-50 lg:w-60 lg:h-60 rounded-full px-3 py-1 lg:px-6 lg:py-3 font-semibold transition-colors duration-200 ${
         isSelected ? colorSelected : "bg-stone-200 text-black"
       }`}
     >
@@ -102,9 +102,9 @@ const CheckInInput: React.FC = () => {
   };
 
   return (
-    <div className="bg-stone-100 rounded-3xl p-10 w-4/5 animate-slide-up">
-      <h1 className="text-3xl font-semibold">How are you feeling today?</h1>
-      <div className="flex gap-10 p-10 text-3xl justify-center items-center">
+    <div className="bg-stone-100 rounded-3xl p-5 lg:p-10 w-full lg:w-4/5 lg:animate-slide-up">
+      <h1 className="text-lg md:text-3xl font-semibold">How are you feeling today?</h1>
+      <div className="flex flex-col lg:flex-row gap-3 lg:gap-10 p-5 lg:p-10 text-lg lg:text-3xl justify-center items-center">
         <StateButton
           onClick={() => setSelectedMood(HealthStatus.GOOD)}
           isSelected={selectedMood === HealthStatus.GOOD}
@@ -124,7 +124,7 @@ const CheckInInput: React.FC = () => {
           colorSelected="bg-lavender text-white"
         />
       </div>
-      <div className="flex justify-end">
+      <div className="flex justify-center md:justify-end">
         <Button size="md" onClick={checkIn ? handleUpdate : handleCreate} className='px-8 py-3'>
           {checkIn ? 'Update' : 'Check In'}
         </Button>
