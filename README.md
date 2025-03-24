@@ -1,12 +1,12 @@
-# Bridge - A Loneliness Prevention Check-in App
-
-Bridge is an app designed to prevent loneliness and ensure the well-being of individuals through daily check-ins. <br/>
-The app helps users stay connected with their loved ones and alerts emergency contacts if necessary.
+# BRIDGE - Check-in App
+<b>Prevent Lonely Deaths – "A New Way to Stay Connected"</b><br/>
+Bridge is an app designed to prevent lonely deaths and ensure the well-being of individuals through daily check-ins. <br/>
+The app helps users stay connected and alerts emergency contacts if necessary.
 
 ## Features
-- Daily Check-in: Users check in once a day by pressing a button in the app, and the information is stored on the server.
+- Daily Check-in: Users check in once a day by clicking a button in the app, and the information is stored on the server.
 
-- User Information Management: Users can manage their personal details (name, email, phone number) and set up notification preferences (SMS or email for morning, afternoon, or evening).
+- User Information Management: Users can manage their personal details and emergency contacts information and set up notification preferences (SMS or email for morning, afternoon, or evening).
 
 - Calendar Visualization: Check-in dates are displayed on a calendar for easy tracking.
 
