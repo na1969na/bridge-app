@@ -21,7 +21,7 @@ const Button = ({
   return (
     <button
       className={cn(
-        "rounded-3xl transition-all duration-200 font-medium text-resene bg-black hover:opacity-90",
+        "rounded-3xl transition-all duration-200 font-medium text-white bg-black hover:opacity-90",
         sizeClasses[size],
         className
       )}

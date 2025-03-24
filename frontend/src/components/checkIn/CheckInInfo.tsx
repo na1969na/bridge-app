@@ -11,12 +11,12 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ title, value, icon }) => {
   return (
-    <div className="flex justify-between gap-3 border-b border-stone-400">
+    <div className="flex flex-col justify-between gap-10 bg-stone-100 rounded-3xl p-6">
       <div className="text-xl flex items-center gap-3">
         {icon}
-        <h3 className="font-semibold text-lg">{title}</h3>
+        <h3 className="text-lg">{title}</h3>
       </div>
-      <p className="text-2xl">{value}</p>
+      <p className="text-3xl">{value}</p>
     </div>
   );
 };
@@ -94,7 +94,7 @@ const CheckInInfo: React.FC = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="flex flex-col gap-5 w-1/3 animate-slide-up">
       {checkInInfo.map((info, index) => (
         <Card
           key={index}

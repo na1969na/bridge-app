@@ -10,6 +10,7 @@ import UserSettings from './pages/UserSettings';
 import About from './pages/About';
 import Toast from './components/Toast';
 import LoadingHomePage from './components/LoadingHomePage';
+import ScrollToTop from './components/ScrollToTop';
 
 const AppRoutes: React.FC = () => {
   const { VITE_AUTH0_ISSUER_BASE_URL, VITE_AUTH0_CLIENT_ID, VITE_DOMAIN } =
@@ -42,6 +43,7 @@ const AppRoutes: React.FC = () => {
         <BrowserRouter>
           <Layout>
             <Toast />
+            <ScrollToTop />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />

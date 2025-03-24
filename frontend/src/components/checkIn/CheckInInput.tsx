@@ -4,13 +4,13 @@ import { useCreateCheckIn, useUpdateCheckIn } from '../../hooks/checkIns';
 import useToastStore from '../../stores/useToastStore';
 import useUserStore from '../../stores/useUserStore';
 import useCheckInStore from '../../stores/useCheckInStore';
+import { Button } from '../common/Button';
 
 interface StateButtonProps {
   onClick: () => void;
   isSelected: boolean;
   label: string;
   colorSelected: string;
-  colorUnselected: string;
 }
 
 const StateButton: React.FC<StateButtonProps> = ({
@@ -18,13 +18,12 @@ const StateButton: React.FC<StateButtonProps> = ({
   isSelected,
   label,
   colorSelected,
-  colorUnselected,
 }) => {
   return (
     <button
       onClick={onClick}
       className={`w-60 h-60 rounded-full px-6 py-3 font-semibold transition-colors duration-200 ${
-        isSelected ? colorSelected : colorUnselected
+        isSelected ? colorSelected : "bg-stone-200 text-black"
       }`}
     >
       {label}
@@ -44,7 +43,9 @@ const CheckInInput: React.FC = () => {
   useEffect(() => {
     if (checkIns && checkIns.length > 0) {
       const latestCheckIn = checkIns.reduce((latest, current) => {
-        return new Date(current.createdAt) > new Date(latest.createdAt) ? current : latest;
+        return new Date(current.createdAt) > new Date(latest.createdAt)
+          ? current
+          : latest;
       }, checkIns[0]);
       setCheckIn(latestCheckIn);
     }
@@ -101,38 +102,33 @@ const CheckInInput: React.FC = () => {
   };
 
   return (
-    <div className="bg-stone-100 rounded-3xl p-10">
+    <div className="bg-stone-100 rounded-3xl p-10 w-4/5 animate-slide-up">
       <h1 className="text-3xl font-semibold">How are you feeling today?</h1>
-      <div className="flex gap-10 p-10 text-3xl">
+      <div className="flex gap-10 p-10 text-3xl justify-center items-center">
         <StateButton
           onClick={() => setSelectedMood(HealthStatus.GOOD)}
           isSelected={selectedMood === HealthStatus.GOOD}
           label="Feeling Good"
           colorSelected="bg-rose text-white"
-          colorUnselected="bg-gray-300 text-black"
         />
         <StateButton
           onClick={() => setSelectedMood(HealthStatus.PHYSICAL)}
           isSelected={selectedMood === HealthStatus.PHYSICAL}
           label="Physical Discomfort"
           colorSelected="bg-olive-green text-white"
-          colorUnselected="bg-gray-300 text-black"
         />
         <StateButton
           onClick={() => setSelectedMood(HealthStatus.MENTAL)}
           isSelected={selectedMood === HealthStatus.MENTAL}
           label="Mental Struggles"
           colorSelected="bg-lavender text-white"
-          colorUnselected="bg-gray-300 text-black"
         />
       </div>
-      {}
-      <button
-        onClick={checkIn ? handleUpdate : handleCreate}
-        className="px-6 py-3 bg-black text-white font-semibold rounded-lg hover:opacity-80 focus:outline-none transition-all duration-300"
-      >
-        {checkIn ? 'Update' : 'Check In'}
-      </button>
+      <div className="flex justify-end">
+        <Button size="md" onClick={checkIn ? handleUpdate : handleCreate} className='px-8 py-3'>
+          {checkIn ? 'Update' : 'Check In'}
+        </Button>
+      </div>
     </div>
   );
 };

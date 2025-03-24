@@ -49,7 +49,7 @@ const Calendar: React.FC<CalendarProps> = ({ currentDate }) => {
   const calendarDays = generateCalendar();
 
   return (
-    <div className="bg-zinc-900 text-white rounded-3xl w-full max-w-md mx-auto aspect-square p-6">
+    <div className="bg-zinc-900 text-white rounded-3xl w-full max-w-md mx-auto aspect-square p-6 animate-slide-up">
       <h2 className="text-xl mb-8 font-semibold flex justify-between items-end">
         <span>Your Wellness Days</span>
         <span className="text-sm text-stone-500">

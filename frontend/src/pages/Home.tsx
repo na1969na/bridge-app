@@ -7,7 +7,7 @@ import CheckInInfo from '../components/checkIn/CheckInInfo';
 import LoadingHomePage from '../components/LoadingHomePage';
 
 const Home: React.FC = () => {
-  const { isLoading, isError }= useUser();
+  const { isLoading, isError } = useUser();
 
   if (isLoading) {
     return <LoadingHomePage />;
@@ -19,11 +19,14 @@ const Home: React.FC = () => {
 
   return (
     <div className="px-10 py-5">
-      <CheckInInput />
+      <div className="flex gap-5">
+        <CheckInInput />
+        <CheckInInfo />
+      </div>
       <div className="flex gap-5 mt-5">
         <Calendar currentDate={new Date()} />
         <StatsCard />
-        <CheckInInfo />
+        <img src="checkin_img.svg" alt="" className="w-1/3 animate-slide-up"/>
       </div>
     </div>
   );
